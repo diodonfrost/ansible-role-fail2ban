@@ -1,2 +1,7 @@
 ---
 # handlers file for ansible-role-fail2ban
+
+- name: "(Handler: All Linux/Unix OSs) Restart fail2ban"
+  service:
+    name: "{{ fail2ban_service }}"
+    state: restarted

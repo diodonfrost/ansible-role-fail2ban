@@ -1,0 +1,29 @@
+---
+# Install and configure fail2ban
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: ansible_os_family == "Debian"
+
+- name: Install fail2ban
+  package:
+    name: "{{ fail2ban_package }}"
+    state: present
+
+- name: Configure fail2ban
+  template:
+    src: fail2ban.j2
+    dest: "{{ fail2ban_config }}"
+    owner: "{{ fail2ban_config_owner }}"
+    group: "{{ fail2ban_config_group }}"
+    mode: 0600
+  notify:
+    - "(Handler: All Linux/Unix OSs) Restart fail2ban"
+
+- name: Manage fail2ban service
+  service:
+    name: "{{ fail2ban_service }}"
+    state: started
+    enabled: yes
