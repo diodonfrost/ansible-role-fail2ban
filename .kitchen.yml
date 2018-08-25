@@ -56,6 +56,51 @@ platforms:
       platform: centos
       provision_command:
         - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+  - name: ubuntu-18.04
+    driver:
+      provision_command: apt-get install -y init
+      run_command: /sbin/init
+      platform: ubuntu
+      provision_command:
+        - touch /var/log/auth.log
+  - name: ubuntu-17.10
+    driver:
+      provision_command: apt-get install -y init
+      run_command: /sbin/init
+      platform: ubuntu
+      provision_command:
+        - touch /var/log/auth.log
+  - name: ubuntu-16.04
+    driver:
+      provision_command: apt-get install -y init
+      run_command: /sbin/init
+      platform: ubuntu
+      provision_command:
+        - touch /var/log/auth.log
+  - name: ubuntu-14.04
+    driver:
+      platform: ubuntu
+      provision_command:
+        - touch /var/log/auth.log
+  - name: debian-9
+    driver:
+      provision_command: apt-get install -y systemd
+      run_command: /bin/systemd
+      platform: debian
+      provision_command:
+        - touch /var/log/auth.log
+  - name: debian-8
+    driver:
+      run_command: /sbin/init
+      platform: debian
+      provision_command:
+        - touch /var/log/auth.log
+  - name: debian-7
+    driver:
+      image: diodonfrost/debian-7-ansible
+      platform: debian
+      provision_command:
+        - touch /var/log/auth.log
 
 # Define playbook
 suites:
