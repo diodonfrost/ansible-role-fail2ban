@@ -1,38 +1,71 @@
-Role Name
-=========
+# fail2ban
 
-A brief description of the role goes here.
+This role provide compliance for install and setup forwarding on your target host.
 
-Requirements
-------------
+## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role was developed using Ansible 2.4 Backwards compatibility is not guaranteed.
+Use `ansible-galaxy install diodonfrost.fail2ban` to install the role on your system.
 
-Role Variables
---------------
+Supported platforms:
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+- name: EL
+  versions:
+    - 6
+    - 7
+- name: Fedora
+  versions:
+    - 28
+    - 27
+    - 26
+- name: Debian
+  versions:
+    - stretch
+    - jessie
+- name: Ubuntu
+  versions:
+    - bionic
+    - artful
+    - xenial
+    - trusty
+    - precise
+```
 
-Dependencies
-------------
+## Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```yaml
+# Set log level
+fail2ban_log_level: "INFO"
 
-Example Playbook
-----------------
+# Define fail2ban log file
+fail2ban_log_target: /var/log/fail2ban.log
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+# Fail2ban ban time
+fail2ban_db_purge: "86400"
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Dependencies
 
-License
--------
+None
 
-BSD
+## Example Playbook
 
-Author Information
-------------------
+This is a sample playbook file for deploying the Ansible Galaxy fail2ban role in a localhost and installing the open source version of fail2ban.
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+```yaml
+---
+- hosts: localhost
+  become: true
+  roles:
+    - role: diodonfrost.fail2ban
+```
+
+
+## License
+
+Apache 2
+
+## Author Information
+
+This role was created in 2018 by diodonfrost.
