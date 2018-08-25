@@ -6,9 +6,9 @@
 
 [Definition]
 
-loglevel = "{{ fail2ban_log_level }}"
+loglevel = {{ fail2ban_log_level }}
 
-logtarget = "{{ fail2ban_log_target }}"
+logtarget = {{ fail2ban_log_target }}
 
 syslogsocket = auto
 
@@ -18,4 +18,4 @@ pidfile = /var/run/fail2ban/fail2ban.pid
 
 dbfile = /var/lib/fail2ban/fail2ban.sqlite3
 
-dbpurgeage = "{{ fail2ban_db_purge }}"
+dbpurgeage = {{ fail2ban_db_purge }}

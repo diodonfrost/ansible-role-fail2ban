@@ -2,10 +2,10 @@
 # defaults file for ansible-role-fail2ban
 
 # Set log level
-fail2ban_log_level: "INFO"
+fail2ban_log_level: INFO
 
 # Define fail2ban log file
 fail2ban_log_target: /var/log/fail2ban.log
 
 # Fail2ban ban time
-fail2ban_db_purge: "86400"
+fail2ban_db_purge: 86400
