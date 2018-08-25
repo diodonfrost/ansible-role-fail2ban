@@ -29,7 +29,10 @@ galaxy_info:
         - xenial
         - trusty
         - precise
-
+    - name: OracleLinux
+      versions:
+        - 7
+        - 6
   galaxy_tags:
    - system
    - security

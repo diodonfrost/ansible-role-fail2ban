@@ -32,6 +32,10 @@ Supported platforms:
     - xenial
     - trusty
     - precise
+ - name: OracleLinux
+   versions:
+     - 7
+     - 6
 ```
 
 ## Role Variables
