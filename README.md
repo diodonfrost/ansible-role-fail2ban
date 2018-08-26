@@ -36,6 +36,9 @@ Supported platforms:
    versions:
      - 7
      - 6
+  - name: Amazon
+    versions:
+      - 2017.12
 ```
 
 ## Role Variables
