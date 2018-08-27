@@ -22,6 +22,16 @@
   notify:
     - "(Handler: All Linux/Unix OSs) Restart fail2ban"
 
+- name: Configure jail
+  template:
+    src: jail.j2
+    dest: "{{ fail2ban_jail }}"
+    owner: "{{ fail2ban_config_owner }}"
+    group: "{{ fail2ban_config_group }}"
+    mode: 0600
+  notify:
+    - "(Handler: All Linux/Unix OSs) Restart fail2ban"
+
 - name: Manage fail2ban service
   service:
     name: "{{ fail2ban_service }}"
