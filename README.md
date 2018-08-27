@@ -45,13 +45,30 @@ Supported platforms:
 
 ```yaml
 # Set log level
-fail2ban_log_level: "INFO"
+fail2ban_log_level: INFO
 
 # Define fail2ban log file
 fail2ban_log_target: /var/log/fail2ban.log
 
 # Fail2ban ban time
-fail2ban_db_purge: "86400"
+fail2ban_db_purge: 86400
+
+jail_bantime: 600
+
+jail_findtime: 600
+
+# Set maximum client can retry
+jail_maxretry: 5
+
+# Specifies if jails should trust hostnames in logs
+jail_usedns: warn
+
+# Definie destination email
+jail_dstmail: root@localhost
+
+# Define sender email
+jail_sendermail: root@localhost
+
 ```
 
 ## Dependencies
