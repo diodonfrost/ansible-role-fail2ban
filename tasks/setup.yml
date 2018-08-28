@@ -32,7 +32,7 @@
 
 - name: Configure fail2ban
   template:
-    src: "{{ jail_template }}"
+    src: fail2ban.j2
     dest: "{{ fail2ban_config }}"
     owner: "{{ fail2ban_config_owner }}"
     group: "{{ fail2ban_config_group }}"
@@ -42,7 +42,7 @@
 
 - name: Configure jail
   template:
-    src: jail.j2
+    src: "{{ jail_template }}"
     dest: "{{ fail2ban_jail }}"
     owner: "{{ fail2ban_config_owner }}"
     group: "{{ fail2ban_config_group }}"
