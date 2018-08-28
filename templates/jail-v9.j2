@@ -6,7 +6,7 @@
 
 [INCLUDES]
 
-before = paths-fedora.conf
+before = paths-{{ jail_include_os }}.conf
 
 [DEFAULT]
 
@@ -26,12 +26,6 @@ usedns = {{ jail_usedns }}
 
 logencoding = auto
 
-# "enabled" enables the jails.
-#  By default all jails are disabled, and it should stay this way.
-#  Enable only relevant to your setup jails in your .local or jail.d/*.conf
-#
-# true:  jail will be enabled and log files will get monitored for changes
-# false: jail is not enabled
 enabled = false
 
 filter = %(__name__)s
@@ -81,13 +75,11 @@ action_badips_report = badips[category="%(__name__)s", agent="%(fail2ban_agent)s
 action = %(action_)s
 
 [sshd]
-
 # To use more aggressive sshd filter (inclusive sshd-ddos failregex):
 #filter = sshd-aggressive
 port    = ssh
 logpath = %(sshd_log)s
 backend = %(sshd_backend)s
-
 
 [sshd-ddos]
 # This jail corresponds to the standard configuration in Fail2ban.
