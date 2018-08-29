@@ -13,22 +13,22 @@
     state: present
 
 - name: get fail2ban version
-  shell: fail2ban-server -V 2>&1 | head -n 1 | sed -r 's/.*([0-9].[0-9]).*/\1/g'
+  shell: fail2ban-server -V 2>&1 | head -n 1 |sed -r 's/.*v0.([0-9]{1,2}\.[0-9]).*/\1/g'
   args:
     executable: /bin/sh
   changed_when: false
   register: fail2ban_version
   check_mode: no
 
-- name: Use fail2ban template v0.8.0
-  set_fact:
-    jail_template: jail-v9.j2
-  when: fail2ban_version.stdout >= '9.0' and not jail_template
-
 - name: Use fail2ban template v0.9.0
   set_fact:
+    jail_template: jail-v9.j2
+  when: fail2ban_version.stdout is version('9.0', '>=') and not jail_template
+
+- name: Use fail2ban template v0.8.0
+  set_fact:
     jail_template: jail-v8.j2
-  when: fail2ban_version.stdout >= '8.0' and not jail_template
+  when: fail2ban_version.stdout is version('8.0', '>=') and not jail_template
 
 - name: Configure fail2ban
   template:

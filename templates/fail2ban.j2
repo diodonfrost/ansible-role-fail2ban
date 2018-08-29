@@ -6,7 +6,7 @@
 
 [Definition]
 
-loglevel = {{ fail2ban_log_level }}
+loglevel = {% if fail2ban_version.stdout >= '9.0'-%}{{ fail2ban_log_level }}{% else %}{{ fail2ban_log_level_v8 }}{% endif %}
 
 logtarget = {{ fail2ban_log_target }}
 

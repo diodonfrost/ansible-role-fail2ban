@@ -5,7 +5,10 @@
 jail_template: ""
 
 # Set log level
-fail2ban_log_level: INFO
+fail2ban_log_level: ERROR
+
+# Set log level info for fail2ban v0.8.x
+fail2ban_log_level_v8: 3
 
 # Define fail2ban log file
 fail2ban_log_target: /var/log/fail2ban.log
