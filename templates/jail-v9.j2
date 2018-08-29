@@ -79,7 +79,7 @@ action = %(action_)s
 #filter = sshd-aggressive
 port    = ssh
 logpath = %(sshd_log)s
-backend = %(sshd_backend)s
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(sshd_backend)s{% endif %}
 
 [sshd-ddos]
 # This jail corresponds to the standard configuration in Fail2ban.
@@ -87,15 +87,14 @@ backend = %(sshd_backend)s
 # in the body.
 port    = ssh
 logpath = %(sshd_log)s
-backend = %(sshd_backend)s
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(sshd_backend)s{% endif %}
 
 
 [dropbear]
 
 port     = ssh
 logpath  = %(dropbear_log)s
-backend  = %(dropbear_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(dropbear_backend)s{% endif %}
 
 [selinux-ssh]
 
@@ -274,6 +273,7 @@ port     = http,https
 port     = http,https
 logpath  = %(syslog_daemon)s
 backend  = %(syslog_backend)s
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [guacamole]
 
@@ -291,14 +291,14 @@ logpath  = /var/log/monit
 port    = 10000
 logpath = %(syslog_authpriv)s
 backend = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [froxlor-auth]
 
 port    = http,https
 logpath  = %(syslog_authpriv)s
 backend  = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 #
 # HTTP Proxy servers
@@ -327,28 +327,28 @@ logpath = /var/log/3proxy.log
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(proftpd_log)s
 backend  = %(proftpd_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(proftpd_backend)s{% endif %}
 
 [pure-ftpd]
 
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(pureftpd_log)s
 backend  = %(pureftpd_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(pureftpd_backend)s{% endif %}
 
 [gssftpd]
 
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(syslog_daemon)s
 backend  = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [wuftpd]
 
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(wuftpd_log)s
 backend  = %(wuftpd_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(wuftpd_backend)s{% endif %}
 
 [vsftpd]
 # or overwrite it in jails.local to be
@@ -375,20 +375,21 @@ logpath  = /root/path/to/assp/logs/maillog.txt
 port     = smtp,465,submission
 logpath  = %(syslog_mail)s
 backend  = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [postfix]
 
 port     = smtp,465,submission
 logpath  = %(postfix_log)s
 backend  = %(postfix_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(postfix_backend)s{% endif %}
 
 [postfix-rbl]
 
 port     = smtp,465,submission
 logpath  = %(postfix_log)s
 backend  = %(postfix_backend)s
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(postfix_backend)s{% endif %}
 maxretry = 1
 
 
@@ -397,14 +398,14 @@ maxretry = 1
 port    = submission,465,smtp
 logpath = %(syslog_mail)s
 backend = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [sendmail-reject]
 
 port     = smtp,465,submission
 logpath  = %(syslog_mail)s
 backend  = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [qmail-rbl]
 
@@ -420,14 +421,14 @@ logpath = /service/qmail/log/main/current
 port    = pop3,pop3s,imap,imaps,submission,465,sieve
 logpath = %(dovecot_log)s
 backend = %(dovecot_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(dovecot_backend)s{% endif %}
 
 [sieve]
 
 port   = smtp,465,submission
 logpath = %(dovecot_log)s
 backend = %(dovecot_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(dovecot_backend)s{% endif %}
 
 [solid-pop3d]
 
@@ -463,7 +464,7 @@ logpath = /opt/kerio/mailserver/store/logs/security.log
 port     = smtp,465,submission,imap3,imaps,pop3,pop3s
 logpath  = %(syslog_mail)s
 backend  = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [postfix-sasl]
 
@@ -473,14 +474,14 @@ port     = smtp,465,submission,imap3,imaps,pop3,pop3s
 # "warn" level but overall at the smaller filesize.
 logpath  = %(postfix_log)s
 backend  = %(postfix_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(postfix_backend)s{% endif %}
 
 [perdition]
 
 port   = imap3,imaps,pop3,pop3s
 logpath = %(syslog_mail)s
 backend = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [squirrelmail]
 
@@ -493,14 +494,14 @@ logpath = /var/lib/squirrelmail/prefs/squirrelmail_access_log
 port   = imap3,imaps
 logpath = %(syslog_mail)s
 backend = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [uwimap-auth]
 
 port   = imap3,imaps
 logpath = %(syslog_mail)s
 backend = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 #
 #
@@ -582,7 +583,7 @@ maxretry = 10
 port     = 3306
 logpath  = %(mysql_log)s
 backend  = %(mysql_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(mysql_backend)s{% endif %}
 
 # Log wrong MongoDB auth (for details see filter 'filter.d/mongodb-auth.conf')
 [mongodb-auth]
@@ -614,13 +615,14 @@ findtime = 86400   ; 1 day
 banaction = %(banaction_allports)s
 logpath  = %(syslog_authpriv)s
 backend  = %(syslog_backend)s
-
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [xinetd-fail]
 
 banaction = iptables-multiport-log
 logpath   = %(syslog_daemon)s
 backend   = %(syslog_backend)s
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 maxretry  = 2
 
 
@@ -651,6 +653,8 @@ action  = %(banaction)s[name=%(__name__)s-tcp, port="%(tcpport)s", protocol="tcp
 
 logpath  = %(syslog_daemon)s     ; nrpe.cfg may define a different log_facility
 backend  = %(syslog_backend)s
+{% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
+
 maxretry = 1
 
 
