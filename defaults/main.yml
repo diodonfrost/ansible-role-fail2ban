@@ -31,3 +31,41 @@ jail_dstmail: root@localhost
 
 # Define sender email
 jail_sendermail: root@localhost
+
+# Enable ssh jail
+jail_sshd: true
+
+# Enable sshd ddos
+jail_sshd_ddos: false
+
+jail_dropbear: false
+
+jail_selinux_ssh: false
+
+jail_apache_auth: false
+
+jail_apache_badbots: false
+
+jail_apache_noscript: false
+
+jail_apache_overflow: false
+
+jail_apache_nohome: false
+
+jail_apache_botsearch: false
+
+jail_apache_fakegoolebot: false
+
+jail_apache_modsecurity: false
+
+jail_apache_shellshock: false
+
+jail_pam_generic: false
+
+jail_asterisk: false
+
+jail_xinetd_fail: false
+
+jail_openhab_auth: false
+
+jail_nginx: false

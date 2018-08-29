@@ -42,28 +42,22 @@ action = %(action_)s
 
 [ssh]
 
-enabled  = true
+enabled  = {{ jail_ssh }}
 port     = ssh
 filter   = sshd
 logpath  = /var/log/auth.log
 maxretry = 6
 
 [dropbear]
-
-enabled  = false
+enabled  = {{ jail_dropbear }}
 port     = ssh
 filter   = dropbear
 logpath  = /var/log/auth.log
 maxretry = 6
 
-# Generic filter for pam. Has to be used with action which bans all ports
-# such as iptables-allports, shorewall
 [pam-generic]
-
-enabled  = false
-# pam-generic filter can be customized to monitor specific subset of 'tty's
+enabled  = {{ jail_pam_generic }}
 filter   = pam-generic
-# port actually must be irrelevant but lets leave it all for some possible uses
 port     = all
 banaction = iptables-allports
 port     = anyport
@@ -71,8 +65,7 @@ logpath  = /var/log/auth.log
 maxretry = 6
 
 [xinetd-fail]
-
-enabled   = false
+enabled   = {{ jail_xinetd_fail }}
 filter    = xinetd-fail
 port      = all
 banaction = iptables-multiport-log
@@ -197,13 +190,10 @@ filter  = suhosin
 logpath = /var/log/lighttpd/error.log
 
 [nginx-http-auth]
-
-enabled = false
+enabled = {{ jail_nginx_http_auth }}
 filter  = nginx-http-auth
 port    = http,https
 logpath = /var/log/nginx/error.log
-
-# Monitor roundcube server
 
 [roundcube-auth]
 
@@ -373,16 +363,14 @@ logpath  = /var/log/named/security.log
 # Multiple jails, 1 per protocol, are necessary ATM:
 # see https://github.com/fail2ban/fail2ban/issues/37
 [asterisk-tcp]
-
-enabled  = false
+enabled  = {{ jail_asterisk }}
 filter   = asterisk
 port     = 5060,5061
 protocol = tcp
 logpath  = /var/log/asterisk/messages
 
 [asterisk-udp]
-
-enabled  = false
+enabled  = {{ jail_asterisk }}
 filter   = asterisk
 port     = 5060,5061
 protocol = udp

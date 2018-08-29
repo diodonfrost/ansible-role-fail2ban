@@ -75,46 +75,37 @@ action_badips_report = badips[category="%(__name__)s", agent="%(fail2ban_agent)s
 action = %(action_)s
 
 [sshd]
-# To use more aggressive sshd filter (inclusive sshd-ddos failregex):
-#filter = sshd-aggressive
+enabled = {{ jail_sshd }}
 port    = ssh
 logpath = %(sshd_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(sshd_backend)s{% endif %}
 
 [sshd-ddos]
-# This jail corresponds to the standard configuration in Fail2ban.
-# The mail-whois action send a notification e-mail with a whois request
-# in the body.
+enabled = {{ jail_sshd_ddos }}
 port    = ssh
 logpath = %(sshd_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(sshd_backend)s{% endif %}
 
 
 [dropbear]
-
+enabled  = {{ jail_dropbear }}
 port     = ssh
 logpath  = %(dropbear_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(dropbear_backend)s{% endif %}
 
 [selinux-ssh]
-
+enabled  = {{ jail_selinux_ssh }}
 port     = ssh
 logpath  = %(auditd_log)s
 
-
-#
-# HTTP servers
-#
-
 [apache-auth]
-
+enabled  = {{ jail_apache_auth }}
 port     = http,https
 logpath  = %(apache_error_log)s
 
 
 [apache-badbots]
-# Ban hosts which agent identifies spammer robots crawling the web
-# for email addresses. The mail outputs are buffered.
+enabled  = {{ jail_apache_badbots }}
 port     = http,https
 logpath  = %(apache_access_log)s
 bantime  = 172800
@@ -122,34 +113,34 @@ maxretry = 1
 
 
 [apache-noscript]
-
+enabled  = {{ jail_apache_noscript }}
 port     = http,https
 logpath  = %(apache_error_log)s
 
 
 [apache-overflows]
-
+enabled  = {{ jail_apache_overflow }}
 port     = http,https
 logpath  = %(apache_error_log)s
 maxretry = 2
 
 
 [apache-nohome]
-
+enabled  = {{ jail_apache_nohome }}
 port     = http,https
 logpath  = %(apache_error_log)s
 maxretry = 2
 
 
 [apache-botsearch]
-
+enabled  = {{ jail_apache_botsearch }}
 port     = http,https
 logpath  = %(apache_error_log)s
 maxretry = 2
 
 
 [apache-fakegooglebot]
-
+enabled  = {{ jail_apache_fakegoolebot }}
 port     = http,https
 logpath  = %(apache_access_log)s
 maxretry = 1
@@ -157,45 +148,40 @@ ignorecommand = %(ignorecommands_dir)s/apache-fakegooglebot <ip>
 
 
 [apache-modsecurity]
-
+enabled  = {{ jail_apache_modsecurity }}
 port     = http,https
 logpath  = %(apache_error_log)s
 maxretry = 2
 
 
 [apache-shellshock]
-
+enabled = {{ jail_apache_shellshock }}
 port    = http,https
 logpath = %(apache_error_log)s
 maxretry = 1
 
 
 [openhab-auth]
-
-filter = openhab
-action = iptables-allports[name=NoAuthFailures]
+enabled = {{ jail_openhab_auth }}
+filter  = openhab
+action  = iptables-allports[name=NoAuthFailures]
 logpath = /opt/openhab/logs/request.log
 
-
 [nginx-http-auth]
-
+enabled = {{ jail_nginx }}
 port    = http,https
 logpath = %(nginx_error_log)s
 
-# To use 'nginx-limit-req' jail you should have `ngx_http_limit_req_module`
-# and define `limit_req` and `limit_req_zone` as described in nginx documentation
-# http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
-# or for example see in 'config/filter.d/nginx-limit-req.conf'
 [nginx-limit-req]
+enabled = {{ jail_nginx }}
 port    = http,https
 logpath = %(nginx_error_log)s
 
 [nginx-botsearch]
-
+enabled  = {{ jail_nginx }}
 port     = http,https
 logpath  = %(nginx_error_log)s
 maxretry = 2
-
 
 # Ban attackers that try to use PHP's URL-fopen() functionality
 # through GET/POST variables. - Experimental, with more than a year
@@ -484,32 +470,6 @@ port   = imap3,imaps
 logpath = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
-#
-#
-# DNS servers
-#
-
-
-# !!! WARNING !!!
-#   Since UDP is connection-less protocol, spoofing of IP and imitation
-#   of illegal actions is way too simple.  Thus enabling of this filter
-#   might provide an easy way for implementing a DoS against a chosen
-#   victim. See
-#    http://nion.modprobe.de/blog/archives/690-fail2ban-+-dns-fail.html
-#   Please DO NOT USE this jail unless you know what you are doing.
-#
-# IMPORTANT: see filter.d/named-refused for instructions to enable logging
-# This jail blocks UDP traffic for DNS requests.
-# [named-refused-udp]
-#
-# filter   = named-refused
-# port     = domain,953
-# protocol = udp
-# logpath  = /var/log/named/security.log
-
-# IMPORTANT: see filter.d/named-refused for instructions to enable logging
-# This jail blocks TCP traffic for DNS requests.
-
 [named-refused]
 
 port     = domain,953
@@ -524,12 +484,9 @@ action   = %(banaction)s[name=%(__name__)s-tcp, port="%(port)s", protocol="tcp",
 logpath = /var/log/nsd.log
 
 
-#
-# Miscellaneous
-#
 
 [asterisk]
-
+enabled  = {{ jail_asterisk }}
 port     = 5060,5061
 action   = %(banaction)s[name=%(__name__)s-tcp, port="%(port)s", protocol="tcp", chain="%(chain)s", actname=%(banaction)s-tcp]
            %(banaction)s[name=%(__name__)s-udp, port="%(port)s", protocol="udp", chain="%(chain)s", actname=%(banaction)s-udp]
@@ -548,37 +505,16 @@ logpath  = /var/log/freeswitch.log
 maxretry = 10
 
 
-# To log wrong MySQL access attempts add to /etc/my.cnf in [mysqld] or
-# equivalent section:
-# log-warning = 2
-#
-# for syslog (daemon facility)
-# [mysqld_safe]
-# syslog
-#
-# for own logfile
-# [mysqld]
-# log-error=/var/log/mysqld.log
 [mysqld-auth]
 
 port     = 3306
 logpath  = %(mysql_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(mysql_backend)s{% endif %}
 
-# Log wrong MongoDB auth (for details see filter 'filter.d/mongodb-auth.conf')
 [mongodb-auth]
-# change port when running with "--shardsvr" or "--configsvr" runtime operation
 port     = 27017
 logpath  = /var/log/mongodb/mongodb.log
 
-
-# Jail for more extended banning of persistent abusers
-# !!! WARNINGS !!!
-# 1. Make sure that your loglevel specified in fail2ban.conf/.local
-#    is not at DEBUG level -- which might then cause fail2ban to fall into
-#    an infinite loop constantly feeding itself with non-informative lines
-# 2. Increase dbpurgeage defined in fail2ban.conf to e.g. 648000 (7.5 days)
-#    to maintain entries for failed logins for sufficient amount of time
 [recidive]
 
 logpath  = /var/log/fail2ban.log
@@ -586,25 +522,19 @@ banaction = %(banaction_allports)s
 bantime  = 604800  ; 1 week
 findtime = 86400   ; 1 day
 
-
-# Generic filter for PAM. Has to be used with action which bans all
-# ports such as iptables-allports, shorewall
-
 [pam-generic]
-# pam-generic filter can be customized to monitor specific subset of 'tty's
+enabled   = {{ jail_pam_generic }}
 banaction = %(banaction_allports)s
 logpath  = %(syslog_authpriv)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [xinetd-fail]
-
+enabled   = {{ jail_xinetd_fail }}
 banaction = iptables-multiport-log
 logpath   = %(syslog_daemon)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 maxretry  = 2
 
-
-# stunnel - need to set port for this
 [stunnel]
 
 logpath = /var/log/stunnel4/stunnel.log
