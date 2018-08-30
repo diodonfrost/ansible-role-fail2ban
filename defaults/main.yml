@@ -35,37 +35,159 @@ jail_sendermail: root@localhost
 # Enable ssh jail
 jail_sshd: true
 
-# Enable sshd ddos
+# true if you want enable ssh ddos jail
 jail_sshd_ddos: false
 
-jail_dropbear: false
-
+# true if you want enable ssh selinux jail
 jail_selinux_ssh: false
 
+# true if you want enable dropbear jail
+jail_dropbear: false
+
+# true if you want enable apache auth jail
 jail_apache_auth: false
 
+# true if you want enable apache badbots jail
 jail_apache_badbots: false
 
+# true if you want enable apache noscript jail
 jail_apache_noscript: false
 
+# true if you want enable apache overflox jail
 jail_apache_overflow: false
 
+# true if you want enable apache nohome jail
 jail_apache_nohome: false
 
+# true if you want enable apache botsearch jail
 jail_apache_botsearch: false
 
+# true if you want enable apache fake log jail
 jail_apache_fakegoolebot: false
 
+# true if you want enable apache mod_security jail
 jail_apache_modsecurity: false
 
+# true if you want enable apache shellshock jail
 jail_apache_shellshock: false
 
+# true if you want enable pam jail
 jail_pam_generic: false
 
+# true if you want enable asterisk jail
 jail_asterisk: false
 
+# true if you want enable xinetd jail
 jail_xinetd_fail: false
 
+# true if you want enable openhab jail
 jail_openhab_auth: false
 
+# true if you want enable nginx jail
 jail_nginx: false
+
+jail_php_url: false
+
+jail_suhosin: false
+
+jail_lighttpd: false
+
+jail_roundcube: false
+
+jail_openwebmail: false
+
+jail_horde: false
+
+jail_groupoffice: false
+
+jail_sogo: false
+
+jail_tine20: false
+
+jail_drupal: false
+
+jail_guacamole: false
+
+jail_webmin: false
+
+jail_froxlor: false
+
+jail_squid: false
+
+jail_3proxy: false
+
+jail_proftpd: false
+
+jail_pureftpd: false
+
+jail_gssftpd: false
+
+jail_wuftpd: false
+
+jail_vsftpd: false
+
+jail_assp: false
+
+jail_smtp: false
+
+jail_postfix: false
+
+jail_sendmail: false
+
+jail_qmail: false
+
+jail_dovecot: false
+
+jail_sieve: false
+
+jail_pop3d: false
+
+jail_exim: false
+
+jail_mysql: false
+
+jail_named: false
+
+jail_recidive: false
+
+jail_counter_strike: false
+
+jail_nagios: false
+
+jail_oracleims: false
+
+jail_directadmin: false
+
+jail_portsentry: false
+
+jail_pass2allow_ftp: false
+
+jail_murmur: false
+
+jail_screensharingd: false
+
+jail_haproxy_auth: false
+
+jail_slapd: false
+
+jail_domino_smtp: false
+
+jail_stunnel: false
+
+jail_ejabberd_auth: false
+
+jail_mongo_auth: false
+
+jail_perdition: false
+
+jail_squirrelmail: false
+
+jail_uwimap_auth: false
+
+jail_cyrus: false
+
+jail_nsd: false
+
+jail_freeswitch: false
+
+jail_kerio: false

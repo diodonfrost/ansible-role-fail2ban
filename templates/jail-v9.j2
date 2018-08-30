@@ -183,307 +183,248 @@ port     = http,https
 logpath  = %(nginx_error_log)s
 maxretry = 2
 
-# Ban attackers that try to use PHP's URL-fopen() functionality
-# through GET/POST variables. - Experimental, with more than a year
-# of usage in production environments.
-
 [php-url-fopen]
-
+enabled = {{ jail_php_url }}
 port    = http,https
 logpath = %(nginx_access_log)s
           %(apache_access_log)s
 
-
 [suhosin]
-
+enabled  = {{ jail_suhosin }}
 port    = http,https
 logpath = %(suhosin_log)s
 
 
 [lighttpd-auth]
-# Same as above for Apache's mod_auth
-# It catches wrong authentifications
+enabled  = {{ jail_lighttpd }}
 port    = http,https
 logpath = %(lighttpd_error_log)s
 
-
-#
-# Webmail and groupware servers
-#
-
 [roundcube-auth]
-
+enabled  = {{ jail_roundcube }}
 port     = http,https
 logpath  = %(roundcube_errors_log)s
 
 
 [openwebmail]
-
+enabled  = {{ jail_openwebmail }}
 port     = http,https
 logpath  = /var/log/openwebmail.log
 
-
 [horde]
-
+enabled  = {{ jail_horde }}
 port     = http,https
 logpath  = /var/log/horde/horde.log
 
-
 [groupoffice]
-
+enabled  = {{ jail_groupoffice }}
 port     = http,https
 logpath  = /home/groupoffice/log/info.log
 
 
 [sogo-auth]
-# Monitor SOGo groupware server
-# without proxy this would be:
-# port    = 20000
+enabled  = {{ jail_sogo }}
 port     = http,https
 logpath  = /var/log/sogo/sogo.log
 
 
 [tine20]
-
+enabled  = {{ jail_tine20 }}
 logpath  = /var/log/tine20/tine20.log
 port     = http,https
 
-
-#
-# Web Applications
-#
-#
-
 [drupal-auth]
-
+enabled  = {{ jail_drupal }}
 port     = http,https
 logpath  = %(syslog_daemon)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [guacamole]
-
+enabled  = {{ jail_guacamole }}
 port     = http,https
 logpath  = /var/log/tomcat*/catalina.out
 
 [monit]
-#Ban clients brute-forcing the monit gui login
+enabled  =
 port = 2812
 logpath  = /var/log/monit
 
 
 [webmin-auth]
-
+enabled = {{ jail_webmin }}
 port    = 10000
 logpath = %(syslog_authpriv)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [froxlor-auth]
-
+enabled = {{ jail_froxlor }}
 port    = http,https
-logpath  = %(syslog_authpriv)s
+logpath = %(syslog_authpriv)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
-#
-# HTTP Proxy servers
-#
-#
-
 [squid]
-
-port     =  80,443,3128,8080
+enabled = {{ jail_squid }}
+port    =  80,443,3128,8080
 logpath = /var/log/squid/access.log
 
-
 [3proxy]
-
+enabled = {{ jail_3proxy }}
 port    = 3128
 logpath = /var/log/3proxy.log
 
-
-#
-# FTP servers
-#
-
-
 [proftpd]
-
+enabled  = {{ jail_proftpd }}
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(proftpd_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(proftpd_backend)s{% endif %}
 
 [pure-ftpd]
-
+enabled  = {{ jail_pureftpd }}
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(pureftpd_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(pureftpd_backend)s{% endif %}
 
 [gssftpd]
-
+enabled  = {{ jail_gssftpd }}
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(syslog_daemon)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [wuftpd]
-
+enabled  = {{ jail_wuftpd }}
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(wuftpd_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(wuftpd_backend)s{% endif %}
 
 [vsftpd]
-# or overwrite it in jails.local to be
-# logpath = %(syslog_authpriv)s
-# if you want to rely on PAM failed login attempts
-# vsftpd's failregex should match both of those formats
+enabled  = {{ jail_vsftpd }}
 port     = ftp,ftp-data,ftps,ftps-data
 logpath  = %(vsftpd_log)s
 
-
-#
-# Mail servers
-#
-
-# ASSP SMTP Proxy Jail
 [assp]
-
+enabled  = {{ jail_assp }}
 port     = smtp,465,submission
 logpath  = /root/path/to/assp/logs/maillog.txt
 
-
 [courier-smtp]
-
+enabled  = {{ jail_smtp }}
 port     = smtp,465,submission
 logpath  = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [postfix]
-
+enabled  = {{ jail_postfix }}
 port     = smtp,465,submission
 logpath  = %(postfix_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(postfix_backend)s{% endif %}
 
 [postfix-rbl]
-
+enabled  = {{ jail_postfix }}
 port     = smtp,465,submission
 logpath  = %(postfix_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(postfix_backend)s{% endif %}
 maxretry = 1
 
-
 [sendmail-auth]
-
+enabled = {{ jail_sendmail }}
 port    = submission,465,smtp
 logpath = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [sendmail-reject]
-
+enabled  = {{ jail_sendmail }}
 port     = smtp,465,submission
 logpath  = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [qmail-rbl]
-
+enabled = {{ jail_qmail }}
 filter  = qmail
 port    = smtp,465,submission
 logpath = /service/qmail/log/main/current
 
-
-# dovecot defaults to logging to the mail syslog facility
-# but can be set by syslog_facility in the dovecot configuration.
 [dovecot]
-
+enabled = {{ jail_dovecot }}
 port    = pop3,pop3s,imap,imaps,submission,465,sieve
 logpath = %(dovecot_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(dovecot_backend)s{% endif %}
 
 [sieve]
-
-port   = smtp,465,submission
+enabled = {{ jail_sieve }}
+port    = smtp,465,submission
 logpath = %(dovecot_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(dovecot_backend)s{% endif %}
 
 [solid-pop3d]
-
+enabled =  {{ jail_pop3d }}
 port    = pop3,pop3s
 logpath = %(solidpop3d_log)s
 
 
 [exim]
-
-port   = smtp,465,submission
+enabled = {{ jail_exim }}
+port    = smtp,465,submission
 logpath = %(exim_main_log)s
 
 
 [exim-spam]
-
-port   = smtp,465,submission
+enabled = {{ jail_exim }}
+port    = smtp,465,submission
 logpath = %(exim_main_log)s
 
 
 [kerio]
-
+enabled = {{ jail_kerio }}
 port    = imap,smtp,imaps,465
 logpath = /opt/kerio/mailserver/store/logs/security.log
 
-
-#
-# Mail servers authenticators: might be used for smtp,ftp,imap servers, so
-# all relevant ports get banned
-#
-
 [courier-auth]
-
+enabled  = {{ jail_smtp }}
 port     = smtp,465,submission,imap3,imaps,pop3,pop3s
 logpath  = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
 
 [postfix-sasl]
-
+enabled  = {{ jail_postfix }}
 port     = smtp,465,submission,imap3,imaps,pop3,pop3s
-# You might consider monitoring /var/log/mail.warn instead if you are
-# running postfix since it would provide the same log lines at the
-# "warn" level but overall at the smaller filesize.
 logpath  = %(postfix_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(postfix_backend)s{% endif %}
 
 [perdition]
-
+enabled = {{ jail_perdition }}
 port   = imap3,imaps,pop3,pop3s
 logpath = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [squirrelmail]
-
+enabled = {{ jail_squirrelmail }}
 port = smtp,465,submission,imap2,imap3,imaps,pop3,pop3s,http,https,socks
 logpath = /var/lib/squirrelmail/prefs/squirrelmail_access_log
 
-
 [cyrus-imap]
-
+enabled = {{ jail_cyrus }}
 port   = imap3,imaps
 logpath = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [uwimap-auth]
-
+enabled = {{ jail_uwimap_auth }}
 port   = imap3,imaps
 logpath = %(syslog_mail)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend = %(syslog_backend)s{% endif %}
 
 [named-refused]
-
+enabled  = {{ jail_named }}
 port     = domain,953
 logpath  = /var/log/named/security.log
 
 
 [nsd]
-
+enabled  = {{ jail_nsd }}
 port     = 53
 action   = %(banaction)s[name=%(__name__)s-tcp, port="%(port)s", protocol="tcp", chain="%(chain)s", actname=%(banaction)s-tcp]
            %(banaction)s[name=%(__name__)s-udp, port="%(port)s", protocol="udp", chain="%(chain)s", actname=%(banaction)s-udp]
 logpath = /var/log/nsd.log
-
-
 
 [asterisk]
 enabled  = {{ jail_asterisk }}
@@ -496,7 +437,7 @@ maxretry = 10
 
 
 [freeswitch]
-
+enabled  = {{ jail_freeswitch }}
 port     = 5060,5061
 action   = %(banaction)s[name=%(__name__)s-tcp, port="%(port)s", protocol="tcp", chain="%(chain)s", actname=%(banaction)s-tcp]
            %(banaction)s[name=%(__name__)s-udp, port="%(port)s", protocol="udp", chain="%(chain)s", actname=%(banaction)s-udp]
@@ -504,19 +445,19 @@ action   = %(banaction)s[name=%(__name__)s-tcp, port="%(port)s", protocol="tcp",
 logpath  = /var/log/freeswitch.log
 maxretry = 10
 
-
 [mysqld-auth]
-
+enabled  = {{ jail_mysql }}
 port     = 3306
 logpath  = %(mysql_log)s
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(mysql_backend)s{% endif %}
 
 [mongodb-auth]
+enabled  = {{ jail_mongo_auth }}
 port     = 27017
 logpath  = /var/log/mongodb/mongodb.log
 
 [recidive]
-
+enabled = {{ jail_recidive }}
 logpath  = /var/log/fail2ban.log
 banaction = %(banaction_allports)s
 bantime  = 604800  ; 1 week
@@ -536,55 +477,48 @@ logpath   = %(syslog_daemon)s
 maxretry  = 2
 
 [stunnel]
-
+enabled = {{ jail_stunnel }}
 logpath = /var/log/stunnel4/stunnel.log
 
-
 [ejabberd-auth]
-
+enabled = {{ jail_ejabberd_auth }}
 port    = 5222
 logpath = /var/log/ejabberd/ejabberd.log
 
-
 [counter-strike]
-
+enabled = {{ jail_counter_strike }}
 logpath = /opt/cstrike/logs/L[0-9]*.log
-# Firewall: http://www.cstrike-planet.com/faq/6
 tcpport = 27030,27031,27032,27033,27034,27035,27036,27037,27038,27039
 udpport = 1200,27000,27001,27002,27003,27004,27005,27006,27007,27008,27009,27010,27011,27012,27013,27014,27015
 action  = %(banaction)s[name=%(__name__)s-tcp, port="%(tcpport)s", protocol="tcp", chain="%(chain)s", actname=%(banaction)s-tcp]
            %(banaction)s[name=%(__name__)s-udp, port="%(udpport)s", protocol="udp", chain="%(chain)s", actname=%(banaction)s-udp]
 
-# consider low maxretry and a long bantime
-# nobody except your own Nagios server should ever probe nrpe
 [nagios]
-
+enabled = {{ jail_nagios }}
 logpath  = %(syslog_daemon)s     ; nrpe.cfg may define a different log_facility
 {% if fail2ban_version.stdout >= '9.4'-%}backend  = %(syslog_backend)s{% endif %}
-
 maxretry = 1
 
-
 [oracleims]
-# see "oracleims" filter file for configuration requirement for Oracle IMS v6 and above
+enabled = {{ jail_oracleims }}
 logpath = /opt/sun/comms/messaging64/log/mail.log_current
 banaction = %(banaction_allports)s
 
 [directadmin]
+enabled = {{ jail_directadmin }}
 logpath = /var/log/directadmin/login.log
 port = 2222
 
 [portsentry]
+enabled  = {{ jail_portsentry }}
 logpath  = /var/lib/portsentry/portsentry.history
 maxretry = 1
 
 [pass2allow-ftp]
-# this pass2allow example allows FTP traffic after successful HTTP authentication
+enabled      = {{ jail_pass2allow_ftp }}
 port         = ftp,ftp-data,ftps,ftps-data
-# knocking_url variable must be overridden to some secret value in jail.local
 knocking_url = /knocking/
 filter       = apache-pass[knocking_url="%(knocking_url)s"]
-# access log of the website with HTTP auth
 logpath      = %(apache_access_log)s
 blocktype    = RETURN
 returntype   = DROP
@@ -594,31 +528,29 @@ findtime     = 1
 
 
 [murmur]
-# AKA mumble-server
+enabled  = {{ jail_murmur }}
 port     = 64738
 action   = %(banaction)s[name=%(__name__)s-tcp, port="%(port)s", protocol=tcp, chain="%(chain)s", actname=%(banaction)s-tcp]
            %(banaction)s[name=%(__name__)s-udp, port="%(port)s", protocol=udp, chain="%(chain)s", actname=%(banaction)s-udp]
 logpath  = /var/log/mumble-server/mumble-server.log
 
-
 [screensharingd]
-# For Mac OS Screen Sharing Service (VNC)
+enabled  = {{ jail_screensharingd }}
 logpath  = /var/log/system.log
 logencoding = utf-8
 
 [haproxy-http-auth]
-# HAProxy by default doesn't log to file you'll need to set it up to forward
-# logs to a syslog server which would then write them to disk.
-# See "haproxy-http-auth" filter for a brief cautionary note when setting
-# maxretry and findtime.
+enabled  = {{ jail_haproxy_auth }}
 logpath  = /var/log/haproxy.log
 
 [slapd]
+enabled = {{ jail_slapd }}
 port    = ldap,ldaps
 filter  = slapd
 logpath = /var/log/slapd.log
 
 [domino-smtp]
+enabled = {{ jail_domino_smtp }}
 port    = smtp,ssmtp
 filter  = domino-smtp
 logpath = /home/domino01/data/IBM_TECHNICAL_SUPPORT/console.log
