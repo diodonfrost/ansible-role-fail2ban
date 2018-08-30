@@ -50,6 +50,7 @@ script:
 
   # Create /var/log/auth.log for fail2ban requirement
   - 'sudo docker exec "$(cat ${container_id})" touch /var/log/auth.log'
+  - 'sudo docker exec "$(cat ${container_id})" touch /var/log/secure'
 
   # Check syntax
   - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/ansible-role-fail2ban/tests/test.yml --syntax-check'

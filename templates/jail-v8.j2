@@ -42,7 +42,7 @@ action = %(action_)s
 
 [ssh]
 
-enabled  = {{ jail_ssh }}
+enabled  = {{ jail_sshd }}
 port     = ssh
 filter   = sshd
 logpath  = /var/log/auth.log
@@ -190,7 +190,7 @@ filter  = suhosin
 logpath = /var/log/lighttpd/error.log
 
 [nginx-http-auth]
-enabled = {{ jail_nginx_http_auth }}
+enabled = {{ jail_nginx }}
 filter  = nginx-http-auth
 port    = http,https
 logpath = /var/log/nginx/error.log
