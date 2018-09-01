@@ -1,4 +1,4 @@
-# Fail2ban  check
+# Fail2ban  install
 
 control 'install-01' do
   impact 1.0
