@@ -1,0 +1,8 @@
+fail2ban_package: fail2ban
+fail2ban_service: fail2ban
+fail2ban_config: /etc/fail2ban/fail2ban.conf
+fail2ban_jail: /etc/fail2ban/jail.conf
+fail2ban_config_owner: root
+fail2ban_config_group: root
+
+jail_include_os: opensuse
