@@ -23,12 +23,12 @@
 - name: Use fail2ban template v0.9.0
   set_fact:
     jail_template: jail-v9.j2
-  when: fail2ban_version.stdout is version('9.0', '>=') and not jail_template
+  when: fail2ban_version.stdout is version_compare('9.0', '>=') and not jail_template
 
 - name: Use fail2ban template v0.8.0
   set_fact:
     jail_template: jail-v8.j2
-  when: fail2ban_version.stdout is version('8.0', '>=') and not jail_template
+  when: fail2ban_version.stdout is version_compare('8.0', '>=') and not jail_template
 
 - name: Configure fail2ban
   template:
