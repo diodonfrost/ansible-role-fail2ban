@@ -36,6 +36,10 @@ galaxy_info:
     - name: Amazon
       versions:
         - 2017.12
+    - name: opensuse
+      versions:
+        - all
+
   galaxy_tags:
    - system
    - security

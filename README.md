@@ -40,6 +40,9 @@ Supported platforms:
   - name: Amazon
     versions:
       - 2017.12
+  - name: opensuse
+    versions:
+      - all
 ```
 
 ## Role Variables
