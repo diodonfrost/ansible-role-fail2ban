@@ -313,7 +313,6 @@ This is a sample playbook file for deploying the Ansible Galaxy fail2ban role in
     - role: diodonfrost.fail2ban
 ```
 
-
 ## License
 
 Apache 2

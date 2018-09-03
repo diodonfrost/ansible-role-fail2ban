@@ -32,6 +32,12 @@ platforms:
   - name: debian-9
   - name: debian-8
   - name: debian-7
+  - name: oraclelinux-7
+    driver:
+      box: bento/oracle-7
+  - name: oraclelinux-6
+    driver:
+      box: bento/oracle-6
 
 # Define playbook
 suites:
