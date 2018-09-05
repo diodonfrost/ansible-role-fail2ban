@@ -43,6 +43,9 @@ Supported platforms:
   - name: opensuse
     versions:
       - all
+   - name: ArchLinux
+     versions:
+      - any
 ```
 
 ## Role Variables

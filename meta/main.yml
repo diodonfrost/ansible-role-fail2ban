@@ -39,7 +39,10 @@ galaxy_info:
     - name: opensuse
       versions:
         - all
-
+    - name: ArchLinux
+      versions:
+        - any
+  
   galaxy_tags:
    - system
    - security
