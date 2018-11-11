@@ -7,6 +7,14 @@
   changed_when: false
   when: ansible_os_family == "Debian"
 
+- name: Sync repositories and update world
+  portage:
+#    package: '@world'
+    update: yes
+    deep: yes
+    sync: yes
+  when: ansible_os_family == "Gentoo"
+
 - name: Install fail2ban
   package:
     name: "{{ fail2ban_package }}"

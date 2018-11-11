@@ -33,19 +33,20 @@ Supported platforms:
     - xenial
     - trusty
     - precise
- - name: OracleLinux
-   versions:
-     - 7
-     - 6
-  - name: Amazon
-    versions:
-      - 2017.12
-  - name: opensuse
-    versions:
-      - all
-   - name: ArchLinux
-     versions:
-      - any
+- name: OracleLinux
+  versions:
+    - 7
+    - 6
+- name: Amazon
+  versions:
+    - 2017.12
+- name: opensuse
+  versions:
+    - 42.3
+    - 13.2
+- name: ArchLinux
+  versions:
+    - any
 ```
 
 ## Role Variables
