@@ -2,11 +2,10 @@
 galaxy_info:
   role_name: fail2ban
   author: diodonfrost
+  company: diodonfrost
   description: Fail2ban install and setup
-
-  license: license Apache
-
   min_ansible_version: 2.4
+  license: license Apache
 
   platforms:
     - name: EL
@@ -42,7 +41,7 @@ galaxy_info:
     - name: ArchLinux
       versions:
         - any
-  
+
   galaxy_tags:
    - system
    - security
