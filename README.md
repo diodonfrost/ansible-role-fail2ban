@@ -1,7 +1,6 @@
 # fail2ban
 
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-diodonfrost.fail2ban-660198.svg)](https://galaxy.ansible.com/diodonfrost/fail2ban)
-[![Build Status](https://travis-ci.org/diodonfrost/ansible-role-fail2ban.svg?branch=master)](https://travis-ci.org/diodonfrost/ansible-role-fail2ban)
 
 This role provide compliance for install and setup forwarding on your target host.
 
